@@ -362,9 +362,6 @@
             padding: 10px; 
         }
     }
-    button {
-        background-color: rgb(92, 89, 89);
-    }
     button.disabled {
         cursor: progress;
     }
@@ -373,11 +370,12 @@
     }
 
     button.option {
-        background-color: white;
-        color: rgb(97, 96, 96);
+        background-color: #fff;
+        color: var(--very-dark-green);
     }
     h4 {
-        margin-top: 35px;
+        margin-top: 0;
+        font-size: 1.2rem;
     }
 
     .box {
@@ -406,8 +404,8 @@
         <tr>
             <td>
                 <p>
-                    <button class="bigButton" class:toggleOn={consoleMode == 1} title="Configure Announcement" onclick={() => {consoleMode == 1 ? consoleMode = 0 : consoleMode = 1}}><span translate="no" class="material-symbols-outlined">campaign</span></button>
-                    <button class="bigButton" class:toggleOn={consoleMode == 2} title="Configure Event" onclick={() => {consoleMode == 2 ? consoleMode = 0 : consoleMode = 2}}><span translate="no" class="material-symbols-outlined">calendar_add_on</span></button>
+                    <button class="bigButton" class:toggleOn={consoleMode == 1} title="Write an announcement" onclick={() => {consoleMode == 1 ? consoleMode = 0 : consoleMode = 1}}><span translate="no" class="material-symbols-outlined">campaign</span></button>
+                    <button class="bigButton" class:toggleOn={consoleMode == 2} title="Set what’s up next" onclick={() => {consoleMode == 2 ? consoleMode = 0 : consoleMode = 2}}><span translate="no" class="material-symbols-outlined">calendar_add_on</span></button>
                 </p>
             </td>
         </tr>
@@ -415,14 +413,14 @@
         <tr>
             <td>
                 <div class="subconsole">
-                    <h4>Announcements</h4>
-                    <p>One or both fields must contain content in order to display</p>
+                    <h4>Announcement</h4>
+                    <p>Fill in a title, a message, or both—then send it to every screen.</p>
                     {#if tutorial.enabled}<p>You can modify the announcement popup by filling out the form fields below. The popup will appear when you sync the display window while the form fields contain content, and the popup will dissapear when you sync the display window and the form fields contain no content.</p>{/if}
                     <form>
                         <input required bind:value={announcementTitle} type = "text" placeholder="Title"><br>
                         <input required bind:value={announcementMessage} class="bigInput" type="text" placeholder="Message">
                         <br>
-                        {#if !announcementOn}<button disabled={sync.announcements || (announcementMessage == "" && announcementTitle == "")} onclick={function() {toggle(0);}} class:disabled={sync.announcements} class:incomplete={announcementMessage == "" && announcementTitle == ""}>Display Announcement</button>{:else}<button disabled={sync.announcements} onclick={function() {toggle(0);}} class:disabled={sync.announcements}>Hide Announcement</button> <button disabled={sync.announcements} onclick={function() { update(0)}} class:disabled={sync.announcements}>Sync Announcement</button>{/if}
+                        {#if !announcementOn}<button disabled={sync.announcements || (announcementMessage == "" && announcementTitle == "")} onclick={function() {toggle(0);}} class:disabled={sync.announcements} class:incomplete={announcementMessage == "" && announcementTitle == ""}>Show announcement</button>{:else}<button disabled={sync.announcements} onclick={function() {toggle(0);}} class:disabled={sync.announcements}>Hide announcement</button> <button disabled={sync.announcements} onclick={function() { update(0)}} class:disabled={sync.announcements}>Update announcement</button>{/if}
                     </form>
                 </div>
             </td>
@@ -431,8 +429,8 @@
         <tr>
             <td>
                 <div class="subconsole">
-                    <h4>Scheduled Event</h4>
-                    <p>International Format will display the time of your event in the 24-hour clock; AM/PM format will display the time of your event in the 12-hour clock.</p>
+                    <h4>What’s up next</h4>
+                    <p>Set what’s happening and when. The display counts down once it’s 30 minutes away.</p>
                     {#if tutorial.enabled}<p>You can modify the upcoming event module by filling out the form fields below. The module will appear when you sync the display window while the form fields contain content, and will count down the time until your event when 30 minutes or less remain. The module will dissapear when you sync the display window and the form fields contain no content.</p>{/if}
                     <form>
                         <input bind:value={eventsTitle} type="text" placeholder="Title">
@@ -453,7 +451,7 @@
                         <button disabled={sync.announcements} class="option" onclick={switchFormat}>Displaying International Format</button>
                         {/if}-->
                         <br>
-                        {#if !eventOn}<button disabled={sync.announcements || eventsTitle == "" || eventTimeInput[0] === "" || eventTimeInput[1] === ""} onclick={function() {sanitizeTime(); toggle(1);}} class:disabled={sync.announcements} class:incomplete={eventsTitle === "" || eventTimeInput[0] === "" || eventTimeInput[1] === ""}>Display Event</button>{:else}<button disabled={sync.announcements} onclick={function() { sanitizeTime(); update(1)}} class:disabled={sync.announcements}>Sync Event</button> <button disabled={sync.announcements} onclick={function() {toggle(1);}} class:disabled={sync.announcements}>Hide Event</button>{/if}
+                        {#if !eventOn}<button disabled={sync.announcements || eventsTitle == "" || eventTimeInput[0] === "" || eventTimeInput[1] === ""} onclick={function() {sanitizeTime(); toggle(1);}} class:disabled={sync.announcements} class:incomplete={eventsTitle === "" || eventTimeInput[0] === "" || eventTimeInput[1] === ""}>Show it</button>{:else}<button disabled={sync.announcements} onclick={function() { sanitizeTime(); update(1)}} class:disabled={sync.announcements}>Update it</button> <button disabled={sync.announcements} onclick={function() {toggle(1);}} class:disabled={sync.announcements}>Hide it</button>{/if}
                     </form>
                 </div>
             </td>
